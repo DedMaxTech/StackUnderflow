@@ -1,0 +1,72 @@
+﻿* {
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 1.1rem;
+}
+body {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #eee;
+}
+header {
+    border-bottom: 2px solid lightgray;
+    padding: 10px;
+    background-color: white;
+}
+#menu {
+    margin: 0 auto;
+    max-width: 1000px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.v-align {
+    display: flex;
+    align-items: center;
+}
+.no-link {
+    text-decoration:none;
+    color: inherit;
+}
+.button {
+    margin: 5px 10px 5px 0px;
+    padding: 5px 10px;
+    color: white;
+    text-decoration: none;
+    background-color: #155ca2;
+    border-radius: 4px;
+    border: none;
+}
+#main-content {
+    background-color: white;
+    padding: 20px;
+    margin: 0 auto;
+    min-width: 1000px;
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+    flex-grow: 1;
+}
+footer {
+    font-size: 16pt;
+    color: white;
+    background-color: #222;
+    margin-top: auto; 
+    text-align: center;
+    padding: 15px;
+}
+.auth-form {
+    border-radius: 15px;
+    padding: 15px;
+    width: 300px;
+    margin: auto auto;
+    box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.31);
+}
+.auth-form input[type=text], input[type=password] {
+    width: 100%;
+}
+.auth-form * {
+    box-sizing: border-box;
+    margin: 3px;
+}
