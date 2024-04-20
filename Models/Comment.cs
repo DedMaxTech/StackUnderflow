@@ -6,5 +6,6 @@
         public string Body { get; set; }
         public DateTime Timestamp { get; set; }
         public User Author { get; set; }
+        public Answer Answer { get; set; }
     }
 }

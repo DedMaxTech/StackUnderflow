@@ -1,6 +1,5 @@
 ﻿* {
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-size: 1.1rem;
 }
 body {
     padding: 0;
@@ -9,6 +8,7 @@ body {
     flex-direction: column;
     min-height: 100vh;
     background-color: #eee;
+    font-size: 110%;
 }
 header {
     border-bottom: 2px solid lightgray;
@@ -69,4 +69,22 @@ footer {
 .auth-form * {
     box-sizing: border-box;
     margin: 3px;
+}
+.reputation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid gray;
+    border-radius: 50%;
+    text-align: center;
+    width: calc(1em + 10px);
+    height: calc(1em + 10px);
+}
+.mr5 {
+    margin-right: 5px; 
+}
+.gray-border {
+    border: 2px gray solid;
+    border-radius: 15px;
+    padding: 15px;
 }

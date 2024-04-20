@@ -11,16 +11,17 @@
 	<header>
 		<div id="menu">
 			<a href="/" class="no-link v-align" style="font-size: 28pt">
-				<img width="70" src="https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/000/632/494/datas/gallery.jpg" alt="">
+				<img width="70" height="55" src="https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/000/632/494/datas/gallery.jpg" alt="">
 				StackUnderflow
 			</a>
 			<div class="v-align">
 				@if (Auth.User != null)
 				{
-
-					<img width="40" src="https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=612x612&w=0&k=20&c=dhV2p1JwmloBTOaGAtaA3AW1KSnjsdMt7-U_3EZElZ0=" alt="">
-					<span>@Auth.User.Login</span>
-					<span style="border: 1px solid black">@Auth.User.Reputation</span>
+					<a class="no-link v-align" asp-controller="Auth" asp-action="UserDetail" asp-route-login="@Auth.User.Login">
+						<img class="mr5" width="40" src="@Auth.User.Image" alt="avatar">
+						<span class="mr5">@Auth.User.Login</span>
+						<span class="reputation mr5">@Auth.User.Reputation</span>
+					</a>
 					<a class="button" asp-controller="Auth" asp-action="Logout">Log out</a>
 				}	   
 				else   

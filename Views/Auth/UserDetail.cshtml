@@ -1,0 +1,36 @@
+﻿@model StackUnderflow.Models.User
+
+<div class="v-align">
+    <img src="@Model.Image" width="100" height="100"/>
+    <div style="width: max-content">
+        <div class="v-align" style="font-size: 1.5em;">
+            <span style="font-weight: bold" class="mr5">@Model.Login</span>
+            <span class="reputation mr5">@Model.Reputation</span>
+        </div>
+        <span>@Model.Email</span>
+    </div>
+</div>
+
+<h4>Answers:</h4>
+<div class="gray-border">
+@*      @if(Model.Answers == null || Model.Answers.Count == 0)
+     {
+         <h4>No answers yet</h4>
+     }
+     else foreach(var i in Model.Answers)
+     {
+         <div>@i.Body</div>
+     }
+ </div>
+
+ <h4>Questions:</h4>
+ <div class="gray-border">
+     @if (Model.Questions == null || Model.Questions.Count == 0)
+     {
+         <h4>No questions yet</h4>
+     }
+     else foreach (var i in Model.Questions)
+         {
+             <div> @i.Title </div>
+         } *@
+</div>

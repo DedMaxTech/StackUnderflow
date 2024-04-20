@@ -7,6 +7,7 @@
         public string Body { get; set; }
         public DateTime Timestamp { get; set; }
         public User Author { get; set; }
-        public List<Comment> Comments { get; set; }
+        //public List<Answer> Answers { get; set; } = new();
+        //public List<Tag> Tags { get; set; } = new();
     }
 }

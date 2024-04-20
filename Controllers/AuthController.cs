@@ -79,12 +79,12 @@ namespace StackUnderflow.Controllers
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return Redirect("/");
         }
-        [Route("users/{login:string}")]
-		public async Task<IActionResult> UserDetail(string login)
+		[Route("users/{login}")]
+		public IActionResult UserDetail(string login)
 		{
-            var u = db.Users.Where(o=>o.Login == login).FirstOrDefault();
-            if (u == null)
-                return NotFound();
+			var u = db.Users.Where(o => o.Login == login).FirstOrDefault();
+			if (u == null)
+				return NotFound();
 			return View(u);
 		}
 	}
