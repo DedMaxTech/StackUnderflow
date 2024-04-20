@@ -5,17 +5,18 @@ namespace StackUnderflow.Models
     public class User
     {
         public int Id { get; set; }
-		public string Login { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public string Image { get; set; } = "https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=612x612&w=0&k=20&c=dhV2p1JwmloBTOaGAtaA3AW1KSnjsdMt7-U_3EZElZ0=";
+		public string Login { get; set; } = null!;
+		public string Email { get; set; } = null!;
+		public string Password { get; set; } = null!;
+		public string Image { get; set; } = "https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=612x612&w=0&k=20&c=dhV2p1JwmloBTOaGAtaA3AW1KSnjsdMt7-U_3EZElZ0=";
 
 		public int Reputation { get; set; } = 0;
         public List<Question> Questions { get; set; } = new();
         public List<Tag> Tags { get; set; } = new();
         public List<Answer> Answers { get; set; } = new();
         public List<Comment> Comments { get; set; } = new();
-    }
+        public List<Vote> Votes { get; set; } = new();
+	}
 
     public record SignupUser(
         [Required(ErrorMessage = "No login provided")]

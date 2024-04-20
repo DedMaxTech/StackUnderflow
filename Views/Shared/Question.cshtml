@@ -1,0 +1,20 @@
+﻿@model Question
+
+<div class="question">
+	<div class="v-align">
+		<div>
+			<div class="v-align">
+				<span class="reputation mr5">@Model.Rating</span>
+				<span>Votes</span>
+			</div>
+			<div>@Model.Answers.Count Answers</div>
+		</div>
+	</div>
+	<div>
+		<h5>@Model.Title</h5>
+		<div>@Model.Body</div>
+		<div>@await Html.PartialAsync("User", Model.Author)</div>
+		<div>Created @Model.Timestamp</div>
+	</div>
+
+</div>

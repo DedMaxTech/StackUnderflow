@@ -1,5 +1,8 @@
 ﻿* {
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: "Poppins", sans-seriff;
+}
+a {
+    text-decoration: none;
 }
 body {
     padding: 0;
@@ -87,4 +90,9 @@ footer {
     border: 2px gray solid;
     border-radius: 15px;
     padding: 15px;
+}
+
+.question {
+    display: flex;
+    border-bottom: 1px gray solid;
 }

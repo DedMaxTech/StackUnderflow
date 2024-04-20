@@ -7,6 +7,7 @@ using System.Security.Claims;
 using StackUnderflow.Context;
 using System.Text;
 using System.Security.Cryptography;
+using Microsoft.EntityFrameworkCore;
 
 namespace StackUnderflow.Controllers
 {
@@ -82,7 +83,7 @@ namespace StackUnderflow.Controllers
 		[Route("users/{login}")]
 		public IActionResult UserDetail(string login)
 		{
-			var u = db.Users.Where(o => o.Login == login).FirstOrDefault();
+			var u = db.Users.Include(u=>u.Answers).Include(u => u.Questions).Where(o => o.Login == login).FirstOrDefault();
 			if (u == null)
 				return NotFound();
 			return View(u);

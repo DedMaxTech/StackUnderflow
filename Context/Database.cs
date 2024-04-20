@@ -10,21 +10,11 @@ namespace StackUnderflow.Context
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Answer> Answers { get; set; }
         public DbSet<Comment> Comments { get; set; }
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<Tag>()
-        //            .HasMany(t => t.Questions)
-        //            .WithMany(q => q.Tags).OnDelete(DeleteBehavior.Restrict)
-        //            .UsingEntity(qt => qt.On);
-        //}
-        public Database(DbContextOptions<Database> options) : base(options)
+        public DbSet<Vote> Votes { get; set; }
+		public Database(DbContextOptions<Database> options) : base(options)
         {
-            Database.EnsureDeleted();
+            //Database.EnsureDeleted();
             Database.EnsureCreated();
-			//Users.Load();
-			//Questions.Load();
-			//Answers.Load();
-			//Comments.Load();
 		}
     }
 }

@@ -1,1 +1,9 @@
-﻿<h1>Hello</h1>
+﻿@model List<Question>;
+
+<h3>Top questions:</h3>
+<div class="gray-border">
+	@foreach (var q in Model)
+	{
+		await Html.RenderPartialAsync("Question", q);
+	}
+</div>

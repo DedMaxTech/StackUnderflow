@@ -13,7 +13,7 @@
 
 <h4>Answers:</h4>
 <div class="gray-border">
-@*      @if(Model.Answers == null || Model.Answers.Count == 0)
+     @if(Model.Answers == null || Model.Answers.Count == 0)
      {
          <h4>No answers yet</h4>
      }
@@ -32,5 +32,5 @@
      else foreach (var i in Model.Questions)
          {
              <div> @i.Title </div>
-         } *@
+         } 
 </div>
