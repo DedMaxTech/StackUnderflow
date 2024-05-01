@@ -11,7 +11,8 @@ namespace StackUnderflow.Context
         public DbSet<Answer> Answers { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Vote> Votes { get; set; }
-		public Database(DbContextOptions<Database> options) : base(options)
+        public DbSet<Image> Images { get; set; }
+        public Database(DbContextOptions<Database> options) : base(options)
         {
             //Database.EnsureDeleted();
             Database.EnsureCreated();

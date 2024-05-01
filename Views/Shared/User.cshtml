@@ -1,6 +1,6 @@
 ﻿@model User
-<a class="no-link v-align" asp-controller="Auth" asp-action="UserDetail" asp-route-login="@Model.Login">
+<a class="v-align" asp-controller="Auth" asp-action="UserDetail" asp-route-login="@Model.Login">
 	<img class="mr5" width="40" src="@Model.Image" alt="avatar">
 	<span class="mr5">@Model.Login</span>
-	<span class="reputation mr5">@Model.Reputation</span>
+	<span class="no-link reputation mr5" style="color: black">@Model.Reputation</span>
 </a>

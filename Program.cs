@@ -2,15 +2,16 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using StackUnderflow.Context;
 using StackUnderflow.Models;
+using Westwind.AspNetCore.Markdown;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddMarkdown();
 builder.Services.AddMvc();
 
 builder.Services.AddDbContext<Database>(o => o.UseSqlServer(
     builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<Auth, Auth>();
-
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).
@@ -26,6 +27,7 @@ var app = builder.Build();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseMarkdown();
 app.UseStaticFiles();
 
 app.MapControllerRoute("default",
@@ -35,15 +37,3 @@ app.Run();
 
 
 
-public class Auth
-{
-    public User? User { set; get; } = null;
-    public Auth(IHttpContextAccessor ctx, Database db)
-    {
-        if (ctx.HttpContext?.User.Identity != null)
-        {
-            User = db.Users.Where(o => o.Login == ctx.HttpContext.User.Identity.Name).FirstOrDefault();
-        }
-    }
-
-}

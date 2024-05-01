@@ -1,6 +1,9 @@
 ﻿@model List<Question>;
 
-<h3>Top questions:</h3>
+<div class="split v-align" >
+	<h1>Top questions:</h1>
+	<a class="button" asp-controller="Questions" asp-action="New">Ask question</a>
+</div>
 <div class="gray-border">
 	@foreach (var q in Model)
 	{

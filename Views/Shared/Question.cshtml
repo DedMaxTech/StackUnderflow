@@ -2,7 +2,7 @@
 
 <div class="question">
 	<div class="v-align">
-		<div>
+		<div style="width: max-content">
 			<div class="v-align">
 				<span class="reputation mr5">@Model.Rating</span>
 				<span>Votes</span>
@@ -10,11 +10,18 @@
 			<div>@Model.Answers.Count Answers</div>
 		</div>
 	</div>
-	<div>
-		<h5>@Model.Title</h5>
-		<div>@Model.Body</div>
-		<div>@await Html.PartialAsync("User", Model.Author)</div>
-		<div>Created @Model.Timestamp</div>
+	<div style="width: 100%; margin-left: 10px">
+		<a asp-controller="Questions" asp-action="Detail" asp-route-title="@Model.Title"><h3>@Model.Title</h3></a>
+		<div>
+			@foreach(var t in Model.Tags)
+			{
+				<a class="tag" asp-controller="Main" asp-action="Tag" asp-route-name="@t.Name">@t.Name</a>
+			}
+		</div>
+		<div class="v-align" style="justify-content: end">
+			<div style="font-size:0.8em">Created @Model.Timestamp</div>
+			<div>@await Html.PartialAsync("User", Model.Author)</div>
+		</div>
 	</div>
 
 </div>

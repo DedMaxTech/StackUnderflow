@@ -14,9 +14,13 @@ namespace StackUnderflow.Controllers
     public class AuthController : Controller
     {
         Database db;
-        public AuthController(Database db)
+        Auth auth;
+        IWebHostEnvironment env;
+        public AuthController(Database db, Auth auth, IWebHostEnvironment webHostEnvironment)
         {
             this.db = db;
+            this.auth = auth;
+            this.env = webHostEnvironment;
         }
 
         private async Task Auth(string login)
@@ -88,5 +92,31 @@ namespace StackUnderflow.Controllers
 				return NotFound();
 			return View(u);
 		}
-	}
+
+        string[] permittedExtensions = { ".png", ".jpeg", ".jpg" };
+        [HttpPost]
+        [Route("uploadImage")]
+        [RequestSizeLimit(4_000_000)]
+        public async Task<IActionResult> UploadImage(IFormFile image)
+        {
+            if (image == null) return BadRequest();
+
+            var ext = Path.GetExtension(image.FileName).ToLowerInvariant();
+            if (string.IsNullOrEmpty(ext) || !permittedExtensions.Contains(ext))
+                return StatusCode(StatusCodes.Status415UnsupportedMediaType);
+
+            string path = $"/Media/{auth.User.Id}";
+            if (!Directory.Exists(env.WebRootPath + path)) 
+                Directory.CreateDirectory(env.WebRootPath + path);
+
+
+            path = Path.Combine(path, DateTime.Now.ToString("yyyyMMddHHmmssfff") + Path.GetExtension(image.FileName));
+            using (var fileStream = new FileStream(env.WebRootPath+path, FileMode.Create))
+                await image.CopyToAsync(fileStream);
+
+            db.Images.Add(new() { Owner = auth.User, Path = path });
+            await db.SaveChangesAsync();
+            return Ok(new { data = new { filePath = path } });
+        }
+    }
 }

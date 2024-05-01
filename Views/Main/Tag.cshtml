@@ -1,0 +1,10 @@
+﻿@model Tag;
+
+<h3><span class="tag">@Model.Name</span></h3>
+<div>Created by @await Html.PartialAsync("User", Model.Author)</div>
+<div class="gray-border">
+	@foreach (var q in Model.Questions)
+	{
+		await Html.RenderPartialAsync("Question", q);
+	}
+</div>

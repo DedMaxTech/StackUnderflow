@@ -9,8 +9,8 @@ namespace StackUnderflow.Models
         public string Title { get; set; } = null!;
 		public string Body { get; set; } = null!;
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		public DateTime Timestamp { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime Timestamp { get; set; } = DateTime.Now;
 
         [DeleteBehavior(DeleteBehavior.ClientCascade)]
         public User Author { get; set; } = null!;

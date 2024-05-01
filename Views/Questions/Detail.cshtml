@@ -1,0 +1,6 @@
+﻿@model Question;
+@using Westwind.AspNetCore.Markdown
+
+<h1>@Model.Title</h1>
+<div>@Markdown.ParseHtmlString(Model.Body)</div>
+<div>@await Html.PartialAsync("User", Model.Author)</div>
