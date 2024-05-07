@@ -11,7 +11,7 @@
 		</div>
 	</div>
 	<div style="width: 100%; margin-left: 10px">
-		<a asp-controller="Questions" asp-action="Detail" asp-route-title="@Model.Title"><h3>@Model.Title</h3></a>
+		<a asp-controller="Questions" asp-action="Detail" asp-route-name="@Model.Title"><h3>@Model.Title</h3></a>
 		<div>
 			@foreach(var t in Model.Tags)
 			{

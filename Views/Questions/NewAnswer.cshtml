@@ -1,22 +1,11 @@
-﻿@model QuestionViewModel
+﻿@model Answer
 
-<h2>New question</h2>
+<h2>New answer</h2>
 <form method="post" asp-antiforgery="true">
-    <div>
-        <label>Title</label> <br />
-        <input type="text" class="big-input" asp-for="Title" />
-        <span asp-validation-for="Title" />
-    </div>
-    
     <div>
         <label>Body</label>
         <textarea asp-for="Body"></textarea>
         <span asp-validation-for="Body" />
-    </div>
-
-    <div>
-        <label>Tags</label> <br />
-        <input id="tags" asp-for="SelectedTags">
     </div>
 
     <div asp-validation-summary="ModelOnly"></div>
@@ -36,12 +25,4 @@
     });
     easyMDE.toggleSideBySide()
 
-    var tagify = new Tagify(document.querySelector('#tags'), {
-        whitelist: @Html.Raw(Json.Serialize(Model.AvailableTags)),
-        maxTags: 5,
-        originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(','),
-        dropdown: {
-            enabled: 0
-        }
-    })
 </script>

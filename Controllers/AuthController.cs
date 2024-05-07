@@ -87,7 +87,12 @@ namespace StackUnderflow.Controllers
 		[Route("users/{login}")]
 		public IActionResult UserDetail(string login)
 		{
-			var u = db.Users.Include(u=>u.Answers).Include(u => u.Questions).Where(o => o.Login == login).FirstOrDefault();
+			var u = db.Users
+                .Include(u=>u.Answers)
+                .Include(u => u.Questions).ThenInclude(q => q.Answers)
+                .Include(u => u.Questions).ThenInclude(q => q.Tags)
+                .Include(u => u.Questions).ThenInclude(q => q.Votes)
+                .FirstOrDefault(o => o.Login == login);
 			if (u == null)
 				return NotFound();
 			return View(u);
@@ -105,7 +110,7 @@ namespace StackUnderflow.Controllers
             if (string.IsNullOrEmpty(ext) || !permittedExtensions.Contains(ext))
                 return StatusCode(StatusCodes.Status415UnsupportedMediaType);
 
-            string path = $"/Media/{auth.User.Id}";
+            string path = $"/media/{auth.User.Id}";
             if (!Directory.Exists(env.WebRootPath + path)) 
                 Directory.CreateDirectory(env.WebRootPath + path);
 

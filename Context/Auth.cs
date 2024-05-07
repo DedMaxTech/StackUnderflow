@@ -1,4 +1,5 @@
-﻿using StackUnderflow.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using StackUnderflow.Models;
 
 namespace StackUnderflow.Context
 {
@@ -9,7 +10,10 @@ namespace StackUnderflow.Context
         {
             if (ctx.HttpContext?.User.Identity != null)
             {
-                User = db.Users.Where(o => o.Login == ctx.HttpContext.User.Identity.Name).FirstOrDefault();
+                User = db.Users
+                    .Include(u=>u.Votes)
+                    .Where(o => o.Login == ctx.HttpContext.User.Identity.Name)
+                    .FirstOrDefault();
             }
         }
     }

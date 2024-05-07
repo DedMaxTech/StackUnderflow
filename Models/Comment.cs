@@ -14,6 +14,6 @@ namespace StackUnderflow.Models
         [DeleteBehavior(DeleteBehavior.ClientCascade)]
 		public User Author { get; set; } = null!;
 
-		public Answer Answer { get; set; } = null!;
+        public Answer Answer { get; set; } = null!;
 	}
 }

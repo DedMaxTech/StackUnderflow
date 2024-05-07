@@ -1,6 +1,6 @@
 ﻿@model Tag;
 
-<h3><span class="tag">@Model.Name</span></h3>
+<h3>Tag: <span class="tag">@Model.Name</span></h3>
 <div>Created by @await Html.PartialAsync("User", Model.Author)</div>
 <div class="gray-border">
 	@foreach (var q in Model.Questions)

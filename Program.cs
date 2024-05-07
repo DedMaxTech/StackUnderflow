@@ -7,6 +7,7 @@ using Westwind.AspNetCore.Markdown;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddMarkdown();
 builder.Services.AddMvc();
+builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
 
 builder.Services.AddDbContext<Database>(o => o.UseSqlServer(
     builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -31,7 +32,9 @@ app.UseMarkdown();
 app.UseStaticFiles();
 
 app.MapControllerRoute("default",
-    "{controller=Main}/{action=Index}/{id?}");
+    "{controller=Main}/{action=Index}/{id:int?}");
+//app.MapControllerRoute("detail",
+//	"{controller}/{name}", defaults: new { action = "Detail" });
 
 app.Run();
 

@@ -29,8 +29,8 @@
      {
          <h4>No questions yet</h4>
      }
-     else foreach (var i in Model.Questions)
-         {
-             <div> @i.Title </div>
-         } 
+    else @foreach (var q in Model.Questions)
+        {
+            await Html.RenderPartialAsync("Question", q);
+        }
 </div>
