@@ -10,35 +10,76 @@
     <div class="gray-border" style="width: 100%;">
         <h1>@Model.Title</h1>
         <div>@Markdown.ParseHtmlString(Model.Body)</div>
-        <div class="v-align" style="justify-content: end">
-            <div style="font-size:0.8em">Asked @Model.Timestamp</div>
-            <div>@await Html.PartialAsync("User", Model.Author)</div>
+        <div>
+            @foreach (var t in Model.Tags)
+            {
+                <a class="tag" asp-controller="Main" asp-action="Tag" asp-route-name="@t.Name">@t.Name</a>
+            }
         </div>
+        <div class="split">
+            <div>
+                @if (Model.Author==Auth.User)
+                {
+                    <a class="mr5" asp-controller="Questions" asp-action="Edit" asp-route-name="@Model.Title">Edit</a>
+                    <a class="mr5" asp-controller="Questions" asp-action="Delete" asp-route-name="@Model.Title">Delete</a>
+                }
+            </div>
+            <div class="v-align" style="justify-content: end">
+                <div class="mr5" style="font-size:0.8em">Asked @Model.Timestamp</div>
+                <div>@await Html.PartialAsync("User", Model.Author)</div>
+            </div>
+        </div>
+        
     </div>
 </div>
 
 <h2>@Model.Answers.Count Answers</h2>
 
-<div class="gray-border">
-    @foreach(var a in Model.Answers)
-    {
-        <div class="question">
-            <div class="votes">
-                <a class="@(Auth.User?.Votes.FirstOrDefault(v=>v.AnswerId==a.Id && v.IsUp)!=null?"outline":"")" asp-controller="Questions" asp-action="VoteAnswer" asp-route-name="@Model.Title" asp-route-answerId="@a.Id" asp-route-vote="up">👍</a>
-                <b class="reputation mr5">@a.Rating</b>
-                <a class="@(Auth.User?.Votes.FirstOrDefault(v=>v.AnswerId==a.Id && !v.IsUp)!=null?"outline":"")" asp-controller="Questions" asp-action="VoteAnswer" asp-route-name="@Model.Title" asp-route-answerId="@a.Id" asp-route-vote="down">👎</a>
-            </div>
-            <div style="width: 100%;">
-                <div>@Markdown.ParseHtmlString(a.Body)</div>
-                <div class="v-align" style="justify-content: end">
-                    <div style="font-size:0.8em">Answered @a.Timestamp</div>
-                    <div>@await Html.PartialAsync("User", a.Author)</div>
+@if(Model.Answers.Count>0)
+{
+    <div class="gray-border">
+        @foreach (var a in Model.Answers)
+        {
+            <div class="question">
+                <div class="votes">
+                    <a class="@(Auth.User?.Votes.FirstOrDefault(v=>v.AnswerId==a.Id && v.IsUp)!=null?"outline":"")" asp-controller="Questions" asp-action="VoteAnswer" asp-route-name="@Model.Title" asp-route-answerId="@a.Id" asp-route-vote="up">👍</a>
+                    <b class="reputation mr5">@a.Rating</b>
+                    <a class="@(Auth.User?.Votes.FirstOrDefault(v=>v.AnswerId==a.Id && !v.IsUp)!=null?"outline":"")" asp-controller="Questions" asp-action="VoteAnswer" asp-route-name="@Model.Title" asp-route-answerId="@a.Id" asp-route-vote="down">👎</a>
+                </div>
+                <div style="width: 100%;">
+                    <div>@Markdown.ParseHtmlString(a.Body)</div>
+                    <div class="v-align" style="justify-content: end">
+                        <div style="font-size:0.8em">Answered @a.Timestamp</div>
+                        <div>@await Html.PartialAsync("User", a.Author)</div>
+                    </div>
                 </div>
             </div>
-        </div>
-    }
-</div>
-
-<a class="button" asp-controller="Questions" asp-action="NewAnswer" asp-route-name="@Model.Title">Answer</a>
+        }
+    </div>
+}
+else
+{
+    <p>No answers yet</p>
+}
+<h4>New answer</h4>
+<div>@TempData["error"]</div>
+<form method="post" asp-action="NewAnswer" asp-controller="Questions" asp-route-name="@Model.Title" asp-antiforgery="true">
+    <textarea name="Body"></textarea>
+    <input class="button" style="float:right" type="submit" value="Answer" />
+</form>
+<script>
+    const easyMDE = new EasyMDE({
+        sideBySideFullscreen: false,
+        renderingConfig: {
+            codeSyntaxHighlighting: true,
+        },
+        spellChecker: false,
+        uploadImage: true,
+        imageUploadEndpoint: "/uploadImage",
+        toolbar: ["bold", "italic", "heading", "strikethrough", "|", "quote", "code", "horizontal-rule", "|", "unordered-list", "ordered-list", "clean-block", "|", "link", "image", "upload-image", "|", "fullscreen"],
+    });
+    easyMDE.toggleSideBySide()
+</script>
+@* <a class="button" asp-controller="Questions" asp-action="NewAnswer" asp-route-name="@Model.Title">Answer</a> *@
 
 <script>hljs.highlightAll();</script>

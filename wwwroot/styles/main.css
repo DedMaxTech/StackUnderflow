@@ -101,10 +101,17 @@ footer {
 
 .question {
     display: flex;
+    box-sizing: border-box;
     border-bottom: 1px gray solid;
 }
 .question:last-of-type{
     border-bottom: none;
+}
+.question img {
+    max-width: 100%;
+}
+.question * {
+    word-wrap:anywhere;
 }
 
 .big-input {

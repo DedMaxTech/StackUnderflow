@@ -69,6 +69,53 @@ namespace StackUnderflow.Controllers
             if (q == null) return NotFound();
             return View(q);
         }
+		[Authorize()]
+		[Route("{name}/edit/")]
+		public async Task<IActionResult> Edit(string name)
+		{
+			
+			var q = await db.Questions.Include(q=>q.Tags).FirstOrDefaultAsync(q => q.Title == name);
+			if (q == null) return NotFound();
+            return View(new QuestionViewModel { Title=q.Title, Body=q.Body, SelectedTags=string.Join(",", q.Tags.Select(t=>t.Name)), AvailableTags = await db.Tags.Select(o => o.Name).ToListAsync() });
+		}
+		[Authorize()]
+		[HttpPost("{name}/edit/")]
+		public async Task<IActionResult> Edit(string name, QuestionViewModel form)
+		{
+			var q = await db.Questions.Include(q=>q.Tags).FirstOrDefaultAsync(q => q.Title == name);
+			if (q == null) return NotFound();
+            if (q.Author.Id!=auth.User.Id) return Forbid();
+
+            if (ModelState.IsValid)
+            {
+                q.Title = form.Title;
+                q.Body = form.Body;
+                q.Tags = form.SelectedTags.Split(',')
+                            .Select(i => db.Tags.FirstOrDefault(o => o.Name == i) == null ?
+                                new Tag { Author = auth.User, Name = i } :
+                                db.Tags.First(o => o.Name == i))
+                            .ToList();
+
+                db.Questions.Update(q);
+                await db.SaveChangesAsync();
+				return RedirectToAction(nameof(Detail), new { name = q.Title });
+			}
+			return View(form);
+		}
+        [Authorize()]
+        [Route("{name}/delete/")]
+        public async Task<IActionResult> Delete(string name) { 
+            var q = await db.Questions
+                .Include(q => q.Tags)
+                .Include(q => q.Votes)
+                .Include(q=>q.Answers).ThenInclude(a=>a.Votes)
+                .Include(q=>q.Answers).ThenInclude(a=>a.Comments)
+                .FirstOrDefaultAsync(q => q.Title == name);
+            if (q.Author.Id!=auth.User.Id) return Forbid();
+            db.Remove(q);
+            await db.SaveChangesAsync();
+            return Redirect("/");
+        }
         [Authorize()]
         [Route("{name}/vote/{vote}")]
         public async Task<IActionResult> Vote(string name,string vote)
@@ -104,11 +151,10 @@ namespace StackUnderflow.Controllers
             {
                 db.Answers.Add(new Answer { Body = answer.Body, Question = q, Author = auth.User });
                 await db.SaveChangesAsync();
-                return RedirectToAction(nameof(Detail), new { name = q.Title });
             }
             else
-                ModelState.AddModelError(nameof(answer.Body), "Body is to short");
-            return View(answer);
+                TempData["error"] = "To short";
+            return RedirectToAction(nameof(Detail), new { name = q.Title });
         }
 
         [Authorize()]

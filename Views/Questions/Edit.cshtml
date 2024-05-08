@@ -1,13 +1,13 @@
 ﻿@model QuestionViewModel
 
-<h2>New question</h2>
+<h2>Edit question</h2>
 <form method="post" asp-antiforgery="true">
     <div>
         <label>Title</label> <br />
         <input type="text" class="big-input" asp-for="Title" />
         <span asp-validation-for="Title" />
     </div>
-    
+
     <div>
         <label>Body</label>
         <textarea asp-for="Body"></textarea>
@@ -20,7 +20,7 @@
     </div>
 
     <div asp-validation-summary="ModelOnly"></div>
-    <input class="button" type="submit" value="Ask question" />
+    <input class="button" type="submit" value="Save edits" />
 </form>
 
 <script>
